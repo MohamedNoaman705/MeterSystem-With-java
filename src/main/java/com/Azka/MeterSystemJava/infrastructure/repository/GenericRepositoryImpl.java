@@ -1,6 +1,7 @@
 package com.Azka.MeterSystemJava.infrastructure.repository;
 
 import com.Azka.MeterSystemJava.domain.GenericRepository;
+import com.Azka.MeterSystemJava.domain.entity.Contract;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.TypedQuery;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 @Transactional
 public class GenericRepositoryImpl<T> implements GenericRepository<T, Long> {
 
@@ -84,4 +84,20 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T, Long> {
     public T update(T entity) {
         return em.merge(entity);
     }
+
+    public String getLastCustomerCode() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<String> cq = cb.createQuery(String.class);
+        Root<Contract> root = cq.from(Contract.class);
+
+        cq.select(root.get("customerCode"));
+        cq.orderBy(cb.desc(root.get("id")));
+
+        TypedQuery<String> query = em.createQuery(cq);
+        query.setMaxResults(1);
+
+        String lastCode = query.getResultStream().findFirst().orElse("0000");
+        return lastCode;
+    }
+
 }

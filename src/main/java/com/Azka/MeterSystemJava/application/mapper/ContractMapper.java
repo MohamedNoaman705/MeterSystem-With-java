@@ -1,6 +1,7 @@
 package com.Azka.MeterSystemJava.application.mapper;
 
 import com.Azka.MeterSystemJava.application.dto.Contract.ContractDto;
+import com.Azka.MeterSystemJava.application.dto.Contract.CreateContractDto;
 import com.Azka.MeterSystemJava.domain.entity.Contract;
 
 public class ContractMapper {
@@ -17,7 +18,7 @@ public class ContractMapper {
         return dto;
     }
 
-    public static Contract toEntity(ContractDto dto){
+    public static Contract toEntity(CreateContractDto dto){
         Contract contract = new Contract();
         contract.setInstallationAddress(dto.getInstallationAddress());
         contract.setFixedFees(dto.getFixedFees());

@@ -11,4 +11,5 @@ public interface GenericRepository <T, ID>{
     List<T> getAll(Specification<T> spec, boolean isTracking, String... props);
     void delete(T entity);
     T update(T entity);
+    String getLastCustomerCode();
 }
